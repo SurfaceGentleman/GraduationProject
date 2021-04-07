@@ -1,0 +1,13 @@
+<!--pages/test/test.wxml-->
+<i-panel title="{{list[index].text}}">
+    <i-radio-group current="{{current}}" bindchange="radioChange">
+        <i-radio wx:for="{{list[index].option_list}}" position="right" wx:key="{{item.id}}" value="{{item.text}}"
+            data-id="{{item.id}}" bindtap="getId">
+        </i-radio>
+    </i-radio-group>
+</i-panel>
+
+<i-button bindclick="nextQuestion" type="primary" wx:if="{{index < list.length}}">下一题</i-button>
+<!-- <i-button bindclick="submit" type="primary" wx:if="{{index < list.length - 1}}">提交</i-button> -->
+
+<i-button bindclick="submit" type="primary" wx:if="{{index == list.length}}">提交</i-button>

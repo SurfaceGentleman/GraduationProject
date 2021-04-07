@@ -1,0 +1,79 @@
+<!-- <i-card title="作答错误" i-class="fontCardWrong" bindtap="cardTap">
+  <view slot="content" i-class="fontSizeContent">1.路由器工作在TCP/IP中的哪一层</view>
+  <view slot="content">
+    <text class="fontOption">
+      选项:
+    </text>
+    <text>
+      （1）数据链路层（2）网络层
+    </text>
+    <text class="fontOption">
+      正确答案:
+    </text>
+    <text class="fontRight">
+      网络层
+    </text>
+  </view>
+</i-card>
+<view class="blank"></view>
+<i-card title="作答正确" i-class="fontCardRight" bindtap="cardTap">
+  <view slot="content" i-class="fontSizeContent">1.路由器工作在TCP/IP中的哪一层</view>
+  <view slot="content">
+    <text class="fontOption">
+      选项:
+    </text>
+    <text>
+      （1）数据链路层（2）网络层
+    </text>
+    <text class="fontOption">
+      正确答案:
+    </text>
+    <text class="fontRight">
+      网络层
+    </text>
+  </view>
+</i-card> -->
+
+<view wx:for="{{test_record.answer_list}}" wx:key="{{}}">
+  <i-card wx:if="{{item.is_true}}" title="作答正确" i-class="fontCardRight" bindtap="cardTap"
+    thumb="/images/正确.png">
+    <view slot="content" i-class="fontSizeContent">{{item.question_info.text}}</view>
+    <view slot="content">
+      <text class="fontOption">
+        选项:
+      </text>
+      <i-row>
+        <i-col span="12" i-class="col-class" wx:for="{{item.options}}" wx:for-item="item2">
+          （{{index+1}}）{{item2.text}}
+        </i-col>
+      </i-row>
+      <text class="fontOption">
+        正确答案:
+      </text>
+      <text class="fontRight">
+        {{item.right_option[0].text}}
+      </text>
+    </view>
+  </i-card>
+  <i-card wx:else title="作答错误" i-class="fontCardWrong" bindtap="cardTap"
+    thumb="/images/错误.png">
+    <view slot="content" i-class="fontSizeContent">{{item.question_info.text}}</view>
+    <view slot="content">
+      <text class="fontOption">
+        选项:
+      </text>
+      <i-row>
+        <i-col span="12" i-class="col-class" wx:for="{{item.options}}" wx:for-item="item2">
+          （{{index+1}}）{{item2.text}}
+        </i-col>
+      </i-row>
+      <text class="fontOption">
+        正确答案:
+      </text>
+      <text class="fontRight">
+        {{item.right_option[0].text}}
+      </text>
+    </view>
+  </i-card>
+  <view class="blank"></view>
+</view>

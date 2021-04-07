@@ -1,0 +1,35 @@
+<!--pages/end/end.wxml-->
+<view class="page">
+  <!--标题-->
+  <view class='page-head'>
+    <view class="page-title">
+      答题结束！您的得分为:
+    </view>
+    <!--分数-->
+    <view class='page-score'>
+      <text class="score-num">{{score}}</text>
+      <text class="score-text">（满分{{total}}分）</text>
+    </view>
+    <text class="score-remark"></text> <!-- 评价 -->
+  </view>
+  <!--查询错误-->
+  <view class='page-footer'>
+    <view class="wrong-view" wx:if="{{wrongList.length > 0}}">
+      <text>错误的题目：</text>
+      <text wx:for="{{wrongListSort}}">[{{item-0+1}}]</text> 题
+    </view>
+    <view class="wrong-btns">
+      <button type="primary" bindtap="toView" hover-class="other-button-hover" class="wrong-btn"
+        wx:if="{{wrongList.length > 0}}"> 点击查看 </button>
+      <!-- <button type="default" bindtap="toIndex" hover-class="other-button-hover" class="wrong-btn"> 返回首页 </button> -->
+    </view>
+    <i-row>
+      <i-col span="12" i-class="col-class">
+        <i-button bind:click="backToHome" type="primary" small="true" shape="circle">返回首页</i-button>
+      </i-col>
+      <i-col span="12" i-class="col-class">
+        <i-button bind:click="toDetail" type="warning" small="true" shape="circle" data-id="{{test_id}}">查看详情</i-button>
+      </i-col>
+    </i-row>
+  </view>
+</view>

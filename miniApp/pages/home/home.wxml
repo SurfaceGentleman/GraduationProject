@@ -1,0 +1,11 @@
+<i-grid>
+  <block wx:for="{{list}}" wx:key="list">
+    <i-grid-item bindtap="toTestPage" data-testId="{{item.id}}" data-name="{{item.name}}">
+      <i-grid-icon>
+        <i-icon type="activity" size="28" color="#80848f" />
+      </i-grid-icon>
+      <i-grid-label>{{item.name}}</i-grid-label>
+      
+    </i-grid-item>
+  </block>
+</i-grid>
