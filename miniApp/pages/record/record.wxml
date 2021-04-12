@@ -3,14 +3,14 @@
   <view class="table" wx:if="{{record.length>0}}">
     <view class="tr bg-w">
       <view class="th first">时间</view>
-      <view class="th">试题</view>
+      <!-- <view class="th">试题</view> -->
       <view class="th ">得分/总分</view>
     </view>
 
     <block wx:for="{{record}}" wx:for-item="item">
       <view class="tr" data-id="{{item.id}}" data-user="{{1}}" bindtap="toDetail">
         <view class="td">{{item.time}}</view>
-        <view class="td first">{{item.test_name}}</view>
+        <!-- <view class="td first">{{item.test_name}}</view> -->
         <view class="td">{{item.score}}/{{item.total}}</view>
       </view>
     </block>

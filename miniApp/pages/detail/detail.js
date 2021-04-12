@@ -21,11 +21,14 @@ Page({
     options.user
     //success回调this作用域更新不了外面的数据,所以保存当前this
     var that = this
+    let app = getApp();
     wx.request({
-      url: 'http://127.0.0.1:8021/app01/user_detail_test_record/1/' + options.test_id + "/",
+      //url: 'http://127.0.0.1:8000/api/user_detail_test_record/1/' + options.test_id + "/",
+      url: 'http://127.0.0.1:8000/api/user_detail_test_record/'+ app.globalData.user_id+'/' + options.test_id + "/",
       method: "GET",
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        "Authorization":"JWT "+ wx.getStorageSync('token')
       },
       success: function (res) {
         console.log(res.data);

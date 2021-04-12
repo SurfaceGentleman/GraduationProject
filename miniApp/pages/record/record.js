@@ -15,13 +15,17 @@ Page({
     wx.setNavigationBarTitle({
       title: "wz的测试记录",
     });
+    let app = getApp()
+    let user_id = app.globalData.user_id
     //success回调this作用域更新不了外面的数据,所以保存当前this
     var that = this
     wx.request({
-      url: "http://127.0.0.1:8021/app01/user_record/1/",
+      //url: "http://127.0.0.1:8000/api/user_record/1/",
+      url: "http://127.0.0.1:8000/api/user_record/" + user_id + "/",
       method: "GET",
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        "Authorization": "JWT " + wx.getStorageSync('token')
       },
       success: function (res) {
         console.log(res.data);

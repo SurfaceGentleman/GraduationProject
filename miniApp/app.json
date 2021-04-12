@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/home/home",
     "pages/index/index",
+    "pages/login/login",
+    "pages/home/home",
     "pages/logs/logs",
     "pages/request/request",
     "pages/event/event",
@@ -9,7 +10,8 @@
     "pages/end/end",
     "pages/detail/detail",
     "pages/wrong/wrong",
-    "pages/record/record"
+    "pages/record/record",
+    "pages/user_profile/user_profile"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -32,6 +34,13 @@
       {
         "pagePath": "pages/record/record",
         "text": "记录",
+        "iconPath": "/images/风筝.png",
+        "selectedIconPath": "/images/风筝.png"
+      },
+      {
+        
+        "pagePath": "pages/user_profile/user_profile",
+        "text": "用户信息",
         "iconPath": "/images/风筝.png",
         "selectedIconPath": "/images/风筝.png"
       }

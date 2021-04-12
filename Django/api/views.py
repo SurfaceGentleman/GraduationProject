@@ -276,3 +276,4 @@ class UserTestRecordAPIView(APIView):
             )
 
         return Response(data=record_json)
+

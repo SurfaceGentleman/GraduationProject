@@ -14,7 +14,7 @@ Page({
   // 事件处理函数
   bindViewTap() {
     wx.navigateTo({
-      url: '../request/request'
+      url: '../login/login'
     })
   },
   onLoad() {
@@ -34,6 +34,9 @@ Page({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
+        
+        let app = getApp()
+        app.globalData.userInfo = res.userInfo
       }
     })
   },

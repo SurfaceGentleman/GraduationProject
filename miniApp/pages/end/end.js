@@ -36,10 +36,11 @@ Page({
     //success回调this作用域更新不了外面的数据,所以保存当前this
     var that = this
     wx.request({
-      url: 'http://127.0.0.1:8021/app01/test_record/' + testid + "/",
+      url: 'http://127.0.0.1:8000/api/test_record/' + testid + "/",
       method: "GET",
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        "Authorization":"JWT "+ wx.getStorageSync('token')
       },
       success: function (res) {
         console.log(res.data);

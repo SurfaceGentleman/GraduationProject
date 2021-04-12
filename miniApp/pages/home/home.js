@@ -27,12 +27,20 @@ Page({
     //success回调this作用域更新不了外面的数据,所以保存当前this
     var that = this
     wx.request({
-      url: 'http://127.0.0.1:8021/app01/question_lists/',
+      url: 'http://127.0.0.1:8000/api/question_lists/',
       method: 'get',
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        "Authorization":"JWT "+ wx.getStorageSync('token')
       },
       success: function (res) {
+        if (res.statusCode != 200){
+          wx.removeStorageSync('token'),
+          wx.navigateTo({
+            url: '/pages/login/login',
+          })
+        }
+
         console.log(res.data)
         var questions = res.data
         //重新渲染页面

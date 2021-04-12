@@ -1,4 +1,4 @@
-// pages/request/request.js
+// pages/user_profile/user_profile.js
 Page({
 
   /**

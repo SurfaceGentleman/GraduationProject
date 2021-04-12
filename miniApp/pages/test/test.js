@@ -65,10 +65,11 @@ Page({
     //success回调this作用域更新不了外面的数据,所以保存当前this
     var that = this
     wx.request({
-      url: 'http://127.0.0.1:8021/app01/question_lists/' + options.testid + "/",
+      url: 'http://127.0.0.1:8000/api/question_lists/' + options.testid + "/",
       method: "GET",
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        "Authorization": "JWT " + wx.getStorageSync('token')
       },
       success: function (res) {
         console.log(res.data);
@@ -199,21 +200,24 @@ Page({
     //let answer_info = JSON.parse(this.data.record)
     //console.log(answer_info)
     var that = this;
+    let app = getApp();
     wx.request({
-      url: 'http://127.0.0.1:8021/app01/upload_test/',
+      url: 'http://127.0.0.1:8000/api/upload_test/',
       method: "POST",
       data: {
         "test_info": {
           "test_name": time.toString() + this.data.question_list.name,
-          "user": 1,
+          "user": app.globalData.user_id,
           "score": this.data.score
         },
         "answer_info": this.data.record
       },
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json',
+        "Authorization": "JWT " + wx.getStorageSync('token')
       },
       success(res) {
+        console.log(res.data)
         let t_id = res.data.记录id;
         wx.navigateTo({
           url: '/pages/end/end?' + "testid=" + t_id + "&total=" + that.data.total + "&score=" + that.data.score,

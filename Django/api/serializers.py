@@ -11,7 +11,7 @@ class UserModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'password', 'describe', 're_password', 'icon']
+        fields = ['username', 'password', 'describe', 'nickname', 're_password', 'icon']
         extra_kwargs = {
             'username': {'max_length': 16},
             'password': {'write_only': True}
@@ -56,7 +56,7 @@ class OptionSerializer(ModelSerializer):
 class QuestionSerializer(ModelSerializer):
     class Meta:
         model = models.Question
-        fields = ['id', 'text', 'score',  'type', 'option_list']
+        fields = ['id', 'text', 'score', 'type', 'option_list']
 
 
 class QuestionListSerializer(ModelSerializer):

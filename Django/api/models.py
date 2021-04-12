@@ -22,8 +22,9 @@ class BaseModel(models.Model):
 
 # 用户(一对一)
 class User(AbstractUser):
-    describe = models.CharField(max_length=256,default="")
+    describe = models.CharField(max_length=256, default="")
     icon = models.ImageField(upload_to='icon', default='icon/default.png')
+    nickname = models.CharField(max_length=32, default="")
 
     def __str__(self):
         return self.username
