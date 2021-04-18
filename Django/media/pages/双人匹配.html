@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+</head>
+<!-- 新 Bootstrap4 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    let ws = null;
+    //let message_list = [];
+    let server_msg = "";
+    let is_ready = false;
+    let is_all_ready = false;
+    let index = 0;
+    let question_list = [];
+    let question_list_all = null;
+    let answer_info = []
+
+    $(document).ready(function () {
+        ws = new WebSocket("ws://127.0.0.1:8000/ws/chat/1/");
+        ws.onopen = function () {
+            console.log("成功连接至服务器")
+        }
+
+
+        $("#join").click(function () {
+            //console.log(ws)
+
+        })
+        $("#send_hello").click(function () {
+            sendOne()
+        })
+        $("#exit").click(function () {
+            ws.close();
+        })
+        $("#ready").click(function () {
+            readyToStart()
+        })
+        $("#get_questions").click(function () {
+            get_questions()
+        })
+
+        ws.onmessage = res => {
+            console.log(res.data)
+            //let msg_list = message_list
+            let server_msg = JSON.parse(res.data)
+            console.log(server_msg)
+            if (server_msg.status === 102) {
+                console.log("用户列表:")
+                let message = ""
+                console.log(server_msg.message)
+                for (let index = 0; index < server_msg.message.length; index++) {
+                    console.log(server_msg.message[index].username);
+                    message += "（" + server_msg.message[index].username + "）"
+                }
+                display_message(message)
+
+            } else if (server_msg.status === 100) {
+                display_message(server_msg.message)
+            } else if (server_msg.status === 101) {
+                display_message(server_msg.message)
+            } else if (server_msg.status === 200) {
+                display_message(server_msg.message)
+            } else if (server_msg.status === 103) {
+                display_message(server_msg.message)
+            } else if (server_msg.status === 201) {
+                display_message(server_msg.message)
+            } else if (server_msg.status === 300) {
+                //题目数据
+                console.log(server_msg);
+                question_list = server_msg.data.question_list;
+                question_list_all = server_msg.data
+                display_question()
+            }
+        }
+    })
+
+    function choosenError() {
+        let is_true;
+        let trueValue = []
+
+    }
+
+    function sendOne(options) {
+        let datas = JSON.stringify({
+            'message': "王臻说:" + "hello",
+            "status": 100
+        })
+        ws.send(datas)
+    }
+
+    function get_questions(options) {
+        let datas = JSON.stringify({
+            "status": 300,
+            "question_list_id": 1
+        })
+        ws.send(datas)
+    }
+
+    function readyToStart(options) {
+        let datas = JSON.stringify({
+            "status": 200
+        })
+        ws.send(datas)
+    }
+
+    function display_message(options) {
+        $("#msg_area").append(
+            "<p>" + options + "</p>"
+        )
+    }
+
+    function display_question(options) {
+
+        /*
+            let item = $("#question_container").append(
+            "<div class='card-header'>" + question_list[index].text + "</div>"
+        );
+        * */
+
+        $("#question_text").html(question_list[index].text);
+        $("#question_text").attr("question_id", question_list[index].id)
+        $("#options_ul").empty()
+        for (let i = 0; i < question_list[index].option_list.length; i++) {
+            if (question_list[index].option_list[i].is_true) {
+                $("#options_ul").append(
+                    //<li class="list-group-item">An item</li>
+                    "<li class='list-group-item options' test='true'>" + question_list[index].option_list[i].text + "</li>"
+                )
+            } else {
+                $("#options_ul").append(
+                    //<li class="list-group-item">An item</li>
+                    "<li class='list-group-item options' test='false'>" + question_list[index].option_list[i].text + "</li>"
+                )
+            }
+        }
+
+        $(".options").click(function () {
+            if (index === question_list.length) {
+                alert("已到最后一题");
+                ws.send(JSON.stringify({
+                        "status": 301,
+                        "message": answer_info
+                    })
+                )
+                return;
+            }
+
+            let is_true = false;
+            if ($(this).attr("test") === "true") {
+                alert("right")
+                is_true = true
+            } else {
+                alert("wrong")
+                is_true = false
+            }
+
+            index++;
+            display_question();
+            answer_info.push(
+                {
+                    "question": $("#question_text").attr('question_id'),
+                    "is_true": is_true
+                }
+            )
+
+        })
+
+    }
+
+
+</script>
+
+<body>
+<div id="room">
+    <div class="container">
+        <button id="join" type="button" class="btn btn-primary">加入房间(王臻)</button>
+        <button id="send_hello" type="button" class="btn btn-secondary">发送Hello</button>
+        <button id="exit" type="button" class="btn btn-success">退出房间</button>
+        <button id="ready" type="button" class="btn btn-danger">准备</button>
+        <button id="is_all_ready" type="button" class="btn btn-light">还有人未准备</button>
+        <button id="get_questions" type="button" class="btn btn-secondary">发送Hello</button>
+    </div>
+    <br/>
+    <div class="container">
+        <div class="jumbotron" id="msg_area">
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div id="question_container" class="card" style="width: 18rem;">
+        <div class="card-header">
+            <span id="question_text">呵呵</span>
+        </div>
+        <ul class="list-group list-group-flush" id="options_ul">
+        </ul>
+    </div>
+</div>
+
+
+</body>
+</html>

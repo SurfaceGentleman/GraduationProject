@@ -114,6 +114,8 @@ class TestRecord(BaseModel):
     test_name = models.CharField(max_length=256, default="")
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
+    # type = models
+
     def total_score(self):
         score = 0
         answer_list = self.answer_set.all()
@@ -171,3 +173,16 @@ class AnswerRecord(BaseModel):
     def __str__(self):
         return self.test_record.test_name + "|" + self.test_record.user.username + "| uid:" + str(
             self.test_record.user.id)
+
+
+# class Room(BaseModel):
+#     # 房价名
+#     name = models.CharField(max_length=200)
+#     # 竞答类型
+#     type = models.IntegerField(choices=((1, '风险题'), (2, '必答题'), (3, '抢答题'), (4, '双人对战')), default=1)
+#     password = models.CharField(max_length=6, default='123456')
+#
+#     # 习题集
+#     question_list = models.ForeignKey(to=QuestionList, on_delete=models.DO_NOTHING, default=None)
+#     # 组织者
+#     user = models.ManyToManyField(to=User, on_delete=models.DO_NOTHING)

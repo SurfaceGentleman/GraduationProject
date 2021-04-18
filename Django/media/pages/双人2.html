@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+</head>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+    let ws = null;
+    //let message_list = [];
+    let server_msg = "";
+    let is_ready = false;
+    let is_all_ready = false
+
+    $(document).ready(function () {
+        ws = new WebSocket("ws://127.0.0.1:8000/ws/chat/2/");
+        ws.onopen = function () {
+            console.log("成功连接至服务器")
+        }
+
+        $("#join").click(function () {
+            //console.log(ws)
+
+        })
+        $("#send_hello").click(function () {
+            sendOne()
+        })
+        $("#exit").click(function () {
+            ws.close();
+        })
+        $("#ready").click(function () {
+            readyToStart()
+        })
+
+        ws.onmessage = res => {
+            console.log(res.data)
+            //let msg_list = message_list
+            let server_msg = JSON.parse(res.data)
+            console.log(server_msg)
+            if (server_msg.status === 102) {
+                console.log("用户列表:")
+                let message = ""
+                console.log(server_msg.message)
+                for (let index = 0; index < server_msg.message.length; index++) {
+                    console.log(server_msg.message[index].username);
+                    message += "（" + server_msg.message[index].username + "）"
+                }
+                display_message(message)
+
+            } else if (server_msg.status === 100) {
+                display_message(server_msg.message)
+            } else if (server_msg.status === 101) {
+                display_message(server_msg.message)
+            } else if (server_msg.status === 200) {
+                display_message(server_msg.message)
+            } else if (server_msg.status === 103) {
+                display_message(server_msg.message)
+            } else if (server_msg.status === 201) {
+                display_message(server_msg.message)
+            }
+        }
+    })
+
+
+    function sendOne(options) {
+        let datas = JSON.stringify({
+            'message': "王臻说:" + "hello",
+            "status": 100
+        })
+        ws.send(datas)
+    }
+
+    function readyToStart(options) {
+        let datas = JSON.stringify({
+            "status": 200
+        })
+        ws.send(datas)
+    }
+
+    function display_message(options) {
+        $("#msg_area").append(
+            "<p>" + options + "</p>"
+        )
+    }
+
+</script>
+
+<body>
+<div class="container">
+    <button id="join" type="button" class="btn btn-primary">加入房间(王臻)</button>
+    <button id="send_hello" type="button" class="btn btn-secondary">发送Hello</button>
+    <button id="exit" type="button" class="btn btn-success">退出房间</button>
+    <button id="ready" type="button" class="btn btn-danger">准备</button>
+    <button id="is_all_ready" type="button" class="btn btn-light">还有人未准备</button>
+</div>
+
+<br/>
+<div class="container">
+    <div class="jumbotron" id="msg_area">
+    </div>
+</div>
+
+</body>
+</html>

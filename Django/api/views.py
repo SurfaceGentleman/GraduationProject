@@ -117,10 +117,10 @@ class UploadQuestionView(APIView):
 
 # 上传测试记录
 class UploadTestRecordView(APIView):
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
 
     def post(self, request, *args, **kwargs):
         json = request.data
