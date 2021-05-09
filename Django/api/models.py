@@ -23,19 +23,20 @@ class BaseModel(models.Model):
 # 用户(一对一)
 class User(AbstractUser):
     describe = models.CharField(max_length=256, default="")
-    icon = models.ImageField(upload_to='icon', default='icon/default.png')
+    icon = models.ImageField(upload_to='icon', default='icon/default.JPG')
+    # 昵称
     nickname = models.CharField(max_length=32, default="")
 
     def __str__(self):
         return self.username
 
 
-# 问题
+# 题目
 class Question(BaseModel):
     text = models.CharField(max_length=512)
     score = models.IntegerField(default=5)
     # 是否单选？(1为单选，2为多选，其余待定)
-    type = models.IntegerField(choices=((1, '单选'), (2, '多选'), (3, '其他')), default=1)
+    type = models.IntegerField(choices=((1, '单选'), (2, '判断'), (3, '其他')), default=1)
 
     def get_list_name(self):
         return self.question_set.name
@@ -59,6 +60,7 @@ class Question(BaseModel):
 
     class Meta:
         db_table = 'question'
+        verbose_name_plural = '题目'
 
 
 # 选项(多对一)
@@ -67,11 +69,14 @@ class Option(BaseModel):
     is_true = models.BooleanField(default=False)
     question = models.ForeignKey(Question, on_delete=models.DO_NOTHING)
 
+    text.short_description = u"标题"
+
     def __str__(self):
         return self.text
 
     class Meta:
         db_table = 'option'
+        verbose_name_plural = '选项'
 
 
 # # 竞赛（小分可以从题目中获得，总分可以直接加）
@@ -106,6 +111,7 @@ class QuestionList(BaseModel):
 
     class Meta:
         db_table = 'questionList'
+        verbose_name_plural = '题目集'
 
 
 # 测试记录
@@ -146,19 +152,25 @@ class TestRecord(BaseModel):
 
     class Meta:
         db_table = 'test_record'
+        verbose_name_plural = '测试记录'
 
 
+# 题目作答记录
 class AnswerRecord(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.DO_NOTHING)
     # 多个选项
 
     chose_options = models.ManyToManyField(Option)
     is_true = models.BooleanField(default=0)
+
+    # score = models.FloatField(default=0, null=True)
+
     # 一对多
     test_record = models.ForeignKey(TestRecord, on_delete=models.DO_NOTHING, related_name="answer_set")
 
     class Meta:
         db_table = 'answer_record'
+        verbose_name_plural = '题目作答记录'
 
     def question_info(self):
         return {'id': self.question.id, 'text': self.question.text}
@@ -175,14 +187,47 @@ class AnswerRecord(BaseModel):
             self.test_record.user.id)
 
 
-# class Room(BaseModel):
-#     # 房价名
-#     name = models.CharField(max_length=200)
-#     # 竞答类型
-#     type = models.IntegerField(choices=((1, '风险题'), (2, '必答题'), (3, '抢答题'), (4, '双人对战')), default=1)
-#     password = models.CharField(max_length=6, default='123456')
-#
-#     # 习题集
-#     question_list = models.ForeignKey(to=QuestionList, on_delete=models.DO_NOTHING, default=None)
-#     # 组织者
-#     user = models.ManyToManyField(to=User, on_delete=models.DO_NOTHING)
+# 房间表
+class Room(BaseModel):
+    # 房价名
+    name = models.CharField(max_length=200)
+    # 竞答类型
+    type = models.IntegerField(choices=((1, '风险题'), (2, '必答题'), (3, '抢答题'), (4, '双人对战')), default=1)
+    password = models.CharField(max_length=6, default='123456')
+
+    # 抢答题得分，若为其他类型，则无视
+    score = models.IntegerField(default=0)
+    # 是否过期
+    is_expired = models.BooleanField(default=False)
+
+    # 测试记录
+    test_record = models.OneToOneField(to=TestRecord, on_delete=models.DO_NOTHING, null=True)
+    # 习题集,若为抢答,则为空
+    question_list = models.ForeignKey(to=QuestionList, on_delete=models.DO_NOTHING, null=True)
+    # 用户 ， 若用户为组织者，那么不保存测试记录，如果为用户，那么保存
+    user = models.ForeignKey(to=User, on_delete=models.DO_NOTHING, default=4)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = '房间'
+
+
+# 错题集
+class Wrong(BaseModel):
+    user = models.ForeignKey(to=User, on_delete=models.DO_NOTHING)
+    question = models.ForeignKey(to=Question, on_delete=models.DO_NOTHING)
+
+    def username(self):
+        return self.user.username
+
+    def question_info(self):
+        return {
+            'text': self.question.text,
+            'answer': self.question.right_option_list(),
+            'options': self.question.option_list()
+        }
+
+    class Meta:
+        verbose_name_plural = '错题'

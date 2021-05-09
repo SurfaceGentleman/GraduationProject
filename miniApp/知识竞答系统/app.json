@@ -1,0 +1,67 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/home/home",
+    "pages/logs/logs",
+    "pages/request/request",
+    "pages/event/event",
+    "pages/test/test",
+    "pages/end/end",
+    "pages/detail/detail",
+    "pages/wrong/wrong",
+    "pages/record/record",
+    "pages/user_profile/user_profile",
+    "pages/contest/contest",
+    "pages/respond/respond",
+    "pages/risk/risk",
+    "pages/question/question",
+    "pages/match/match",
+    "pages/matchcontest/matchcontest"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#bbbec4",
+    "selectedColor": "#2b85e4",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [{
+        "pagePath": "pages/home/home",
+        "text": "单机练习",
+        "iconPath": "/images/扭蛋.png",
+        "selectedIconPath": "/images/流星.png"
+      },
+      {
+        "pagePath": "pages/record/record",
+        "text": "练习记录",
+        "iconPath": "/images/风筝.png",
+        "selectedIconPath": "/images/流星.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "多人竞答房间",
+        "iconPath": "/images/对话框.png",
+        "selectedIconPath": "/images/流星.png"
+      },
+      {
+        "pagePath": "pages/match/match",
+        "text": "1对1 pk",
+        "iconPath": "/images/云彩.png",
+        "selectedIconPath": "/images/流星.png"
+      },
+      {
+        "pagePath": "pages/user_profile/user_profile",
+        "text": "用户信息",
+        "iconPath": "/images/彩铅.png",
+        "selectedIconPath": "/images/流星.png"
+      }
+
+    ]
+  }
+}

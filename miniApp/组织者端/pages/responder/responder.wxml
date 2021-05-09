@@ -1,0 +1,33 @@
+<!--pages/responder/responder.wxml-->
+<van-notice-bar
+  color="#1989fa"
+  background="#ecf9ff"
+  left-icon="info-o"
+  text="请确认所有用户进入后开始发送题目"
+/>
+
+<view>
+  <van-row>
+    <van-col span="8" offset="8">
+      <van-button plain type="info" bindtap="sendClientQuestion">向用户发送题目</van-button>
+    </van-col>
+  </van-row>
+</view>
+
+<view>
+  <view wx:for="{{message_list}}">
+    <text>{{item}}</text>
+  </view>
+</view>
+
+<view>
+  <text>作答记录:</text>
+  <view wx:for="{{user_record}}">
+    <text>用户名：{{item.user_name}}（第{{index+1}}名）</text>
+    <view wx:for="{{item.data}}" wx:for-item="item2">
+      <view>
+        {{item2.question}}, {{item2.is_true}}, {{item2.score}}
+      </view>
+    </view>
+  </view>
+</view>

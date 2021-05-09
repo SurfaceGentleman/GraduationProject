@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
@@ -18,7 +19,9 @@ class UserModelSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        user = User.objects.create_user(**validated_data)
+        user.groups.add(Group.objects.get(id=3))
+        return user
 
     # 局部钩子
     def validate_mobile(self, data):
@@ -56,15 +59,19 @@ class OptionSerializer(ModelSerializer):
 class QuestionSerializer(ModelSerializer):
     class Meta:
         model = models.Question
-        fields = ['id', 'text', 'score', 'type', 'option_list']
+        fields = ['id', 'text', 'score', 'type', 'option_list', 'right_option_list']
+        extra_kwargs = {
+            'right_option_list': {'read_only': True}
+        }
 
 
 class QuestionListSerializer(ModelSerializer):
     class Meta:
         model = models.QuestionList
-        fields = ['id', 'name', 'question_list']
+        fields = ['id', 'name', 'question_list', 'create_time']
         extra_kwargs = {
             "questions": {'write_only': True},
+            'create_time': {'read_only': True}
         }
 
 
@@ -93,7 +100,26 @@ class AnswerRecordSerializer(ModelSerializer):
         'question': {'write_only': True},
     }
 
+
+class RoomSerializer(ModelSerializer):
+    class Meta:
+        model = models.Room
+        fields = ['id', 'test_record', 'score', 'name', 'question_list', 'user', 'password', "type"]
+
+
 # class BriefQuestionListSerializer(ModelSerializer):
 #     class Meta:
 #         model = models.QuestionList
 #         fields = ['id', 'name']
+
+class WrongSerializer(ModelSerializer):
+    class Meta:
+        model = models.Wrong
+        fields = ['id', 'user', 'question', 'question_info', 'username']
+        extra_kwargs = {
+            'user': {'write_only': True},
+            'question': {'write_only': True},
+            'question_info': {'read_only': True},
+            'username': {'read_only': True}
+        }
+        # depth = 1

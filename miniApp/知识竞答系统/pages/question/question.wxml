@@ -1,0 +1,20 @@
+<i-card title="作答错误" i-class="fontCardWrong" bindtap="cardTap"
+    thumb="/images/错误.png">
+    <view slot="content" i-class="fontSizeContent">{{question.text}}</view>
+    <view slot="content">
+      <text class="fontOption">
+        选项:
+      </text>
+      <i-row>
+        <i-col span="12" i-class="col-class" wx:for="{{question.option_list}}">
+          （{{index+1}}）{{item.text}}
+        </i-col>
+      </i-row>
+      <text class="fontOption">
+        正确答案:
+      </text>
+      <text class="fontRight">
+        {{question.right_option_list[0].text}}
+      </text>
+    </view>
+  </i-card>

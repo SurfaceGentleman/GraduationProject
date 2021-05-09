@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/configRoom/configRoom",
+    "pages/responder/responder",
+    "pages/responder2/responder2",
+    "pages/admin/admin",
+    "pages/enter/enter"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#bbbec4",
+    "selectedColor": "#19be6b",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [{
+        "pagePath": "pages/index/index",
+        "text": "创建房间",
+        "iconPath": "/images/案例-3.png",
+        "selectedIconPath": "/images/蔬菜.png"
+
+      },
+      {
+        "pagePath": "pages/enter/enter",
+        "text": "进入房间",
+        "iconPath": "/images/搭配-3.png",
+        "selectedIconPath": "/images/蔬菜.png"
+
+      },
+      {
+        "pagePath": "pages/admin/admin",
+        "text": "信息管理",
+        "iconPath": "/images/在线预约-3.png",
+        "selectedIconPath": "/images/蔬菜.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "van-button": "@vant/weapp/button/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-divider": "@vant/weapp/divider/index",
+    "van-grid": "@vant/weapp/grid/index",
+    "van-grid-item": "@vant/weapp/grid-item/index",
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index"
+  }
+}

@@ -1,0 +1,25 @@
+/* pages/detail/detail.wxss */
+.fontCardRight {
+  color: green;
+}
+
+.fontCardWrong {
+  color: red;
+}
+.blank{
+  margin-bottom: 10rpx;
+}
+
+.fontOption {
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.fontRight {
+  font-weight: bold;
+  color: rgb(34, 189, 47);
+}
+
+.fontSizeCardWrong {
+  color: red;
+}

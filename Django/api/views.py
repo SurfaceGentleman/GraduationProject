@@ -27,6 +27,11 @@ class RegisterView(GenericViewSet, CreateModelMixin, RetrieveModelMixin, UpdateM
             return UserImageModelSerializer
 
 
+class RoomViewSet(ModelViewSet):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+
 class QuestionViewSet(ModelViewSet):
     """
         list:
@@ -43,37 +48,42 @@ class QuestionViewSet(ModelViewSet):
         """
     serializer_class = QuestionSerializer
     queryset = models.Question.objects.all()
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
 
 
 class QuestionListViewSet(ModelViewSet):
     serializer_class = QuestionListSerializer
     queryset = models.QuestionList.objects.all()
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
 
 
 class TestRecordViewSet(ModelViewSet):
     serializer_class = TestRecordSerializer
     queryset = models.TestRecord.objects.all()
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
 
 
 class AnswerRecordViewSet(ModelViewSet):
     serializer_class = AnswerRecordSerializer
     queryset = models.AnswerRecord.objects.all()
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
+
+
+class WrongViewSet(ModelViewSet):
+    serializer_class = WrongSerializer
+    queryset = models.Wrong.objects.all()
 
 
 class OptionViewSet(ModelViewSet):
@@ -87,10 +97,10 @@ class OptionViewSet(ModelViewSet):
 
 # 上传题目
 class UploadQuestionView(APIView):
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
 
     def post(self, request, *args, **kwargs):
         jsons = request.data
@@ -147,10 +157,10 @@ class UploadTestRecordView(APIView):
 
 
 class UserWrongAnswerView(APIView):
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
         wrong_info = []
@@ -181,10 +191,10 @@ class UserWrongAnswerView(APIView):
 
 # 用户详细答题数据
 class UserDetailTestView(APIView):
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
 
     def get(self, request, pk, test_pk):
         user_last = TestRecord.objects.filter(user_id=pk).filter(pk=test_pk).first()
@@ -215,10 +225,10 @@ class UserDetailTestView(APIView):
 
 # 用户最近一次作答
 class UserLastTestView(APIView):
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
 
     def get(self, request, pk):
         user_last = TestRecord.objects.filter(user_id=pk).last()
@@ -249,10 +259,10 @@ class UserLastTestView(APIView):
 
 # 用户的作答记录
 class UserTestRecordAPIView(APIView):
-    # 认证
-    authentication_classes = [JSONWebTokenAuthentication, ]
-    # 权限控制
-    permission_classes = [IsAuthenticated, ]
+    # # 认证
+    # authentication_classes = [JSONWebTokenAuthentication, ]
+    # # 权限控制
+    # permission_classes = [IsAuthenticated, ]
 
     def get(self, request, pk):
         user_records = TestRecord.objects.filter(user_id=pk)
@@ -276,4 +286,26 @@ class UserTestRecordAPIView(APIView):
             )
 
         return Response(data=record_json)
+
+
+class WrongAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        user = kwargs.get('user')
+        wrong_list = User.objects.get(pk=user).wrong_set.all().order_by('create_time')
+
+        json = []
+        print(wrong_list)
+        for wrong in wrong_list:
+            json.append({
+                "question": wrong.question_id,
+                "question_info": wrong.question_info()
+            })
+        # print(list(set(json)))
+        return Response(data=json)
+
+    def post(self, request, *args, **kwargs):
+        wrong_ser = WrongSerializer(data=request.data, partial=True, many=True)
+        wrong_ser.is_valid(raise_exception=True)
+        wrong_ser.save()
+        return Response("保存成功")
 

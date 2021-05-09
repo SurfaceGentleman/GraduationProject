@@ -1,0 +1,24 @@
+<view style="margin-bottom:50rpx">
+</view>
+<i-card title="单机练习模块" extra="当前用户:{{user_name}}" thumb="https://media-image1.baydn.com/ce012a694688f7eb86045dc090e214585e260cbce785433fb6740357388b84c1.png?x-oss-process=image/quality,Q_90">
+  <view slot="content">知识竞答系统</view>
+  <view slot="footer">欢迎使用！</view>
+</i-card>
+<view style="margin-top:50rpx">
+</view>
+
+
+<i-cell-group>
+  <block wx:for="{{list}}">
+    <i-cell bindtap="toTestPage" data-testId="{{item.id}}" data-name="{{item.name}}">
+      <i-row>
+        <i-col span="6" i-class="col-class">
+          <i-icon type="task" size="28" color="#5cadff" />
+        </i-col>
+        <i-col span="8" i-class="col-class">{{item.name}}</i-col>
+        <i-col span="8" i-class="col-class">{{item.create_time}}</i-col>
+      </i-row>
+
+    </i-cell>
+  </block>
+</i-cell-group>

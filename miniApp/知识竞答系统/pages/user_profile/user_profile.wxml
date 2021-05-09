@@ -1,0 +1,42 @@
+<i-cell-group>
+  <i-cell>
+    <i-row>
+      <i-col span="8" offset="2" i-class="col-class">
+        <i-avatar size="large" src="http://127.0.0.1:8000/{{icon}}"></i-avatar>
+      </i-col>
+      <i-col span="8" i-class="col-class" label="{{desc}}">
+        <text style="color:#80848f">用户名:</text>{{username}}
+      </i-col>
+    </i-row>
+  </i-cell>
+  <i-cell>
+    <i-row>
+      <i-col span="8" offset="2" i-class="col-class">
+        <text style="color:#80848f">个性签名:</text>
+      </i-col>
+      <i-col span="12" i-class="col-class">
+        {{desc}}
+      </i-col>
+    </i-row>
+  </i-cell>
+  <i-cell bindtap="toWrongPage">
+    <i-row>
+      <i-col span="8" offset="2" i-class="col-class" label="{{desc}}">
+        <text>错题集</text>
+      </i-col>
+      <i-col span="4" i-class="col-class">
+        <i-icon type="activity" size="28" color="#80848f" />
+      </i-col>
+    </i-row>
+  </i-cell>
+  <i-cell>
+    <i-row>
+      <i-col span="8" offset="2" i-class="col-class">
+
+        <text style="color:red" bindtap="loginOut">退出登录</text>
+      </i-col>
+      <i-col span="8" i-class="col-class">
+      </i-col>
+    </i-row>
+  </i-cell>
+</i-cell-group>

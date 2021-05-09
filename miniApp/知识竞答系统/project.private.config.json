@@ -1,0 +1,22 @@
+{
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/user_profile/user_profile",
+          "pathName": "pages/user_profile/user_profile",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

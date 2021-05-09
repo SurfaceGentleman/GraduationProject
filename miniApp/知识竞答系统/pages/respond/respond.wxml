@@ -1,0 +1,35 @@
+<!--pages/respond/respond.wxml-->
+<i-notice-bar background-color="#999999" color="green">
+  当前用户列表:
+  <block wx:for="{{user_list}}">
+    <text>{{index+1}}:{{item}} </text>
+  </block>
+</i-notice-bar>
+
+
+
+<i-row>
+  <i-col span="12" i-class="col-class">
+    <i-button shape="circle" type="primary" bindtap="sendOne">hello</i-button>
+  </i-col>
+  <i-col span="12" i-class="col-class">
+    <i-button shape="circle" type="info" disabled="{{!canIUseButton}}" bindtap="sendResponder">抢答</i-button>
+  </i-col>
+</i-row>
+
+<text wx:if="{{!hasEnd}}"></text>
+<text wx:else style="color:red">最终得分:{{score}}</text>
+<i-button wx:if="{{hasEnd}}" type="primary">返回首页</i-button>
+
+<i-card title="消息列表" extra="得分:{{score}}" style="margin-top:100rpx">
+  <view slot="content">
+    <view>
+      <text wx:if="{{!canIUseButton}}" style="color:#ff9900">等待组织者发布抢答/判断答案......</text>
+      <text wx:else style="color:#5cadff">组织者已发布，请抢答</text>
+    </view>
+    <view wx:for="{{message_list}}">
+      <text>{{item}}</text>
+    </view>
+  </view>
+</i-card>
+<i-message id="message" />

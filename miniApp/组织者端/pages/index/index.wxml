@@ -1,0 +1,22 @@
+<view>
+  <text></text>
+  <van-notice-bar scrollable="" text="请选择题库并创建房间:" />
+  <view></view>
+
+  <van-grid>
+    <block wx:for="{{list}}">
+      <van-grid-item bindtap="tapToCreateRoom" data-id="{{item.id}}" data-type="{{item.type}}" data-name="{{item.name}}"
+        icon="font-o" icon-color="#00CED1" text="{{item.name}}" />
+    </block>
+
+  </van-grid>
+
+  <van-divider contentPosition="center">创建其他模式</van-divider>
+
+  <van-grid>
+    <van-grid-item bindtap="tapToCreateRoom" data-type="3" type="primary" data-name="现场抢答" icon="service-o"
+      icon-color="#19be6b" text="现场抢答" />
+
+  </van-grid>
+
+</view>

@@ -1,0 +1,75 @@
+<!--pages/responder2/responder2.wxml-->
+<!-- <button bindtap="sendResponder" disabled="{{is_end}}">发布抢答</button>
+<button bindtap="judgeScore" disabled="{{!canIJudge}}" data-type="1">加分</button>
+<button bindtap="judgeScore" disabled="{{!canIJudge}}" data-type="0">扣分</button>
+<button type="warn" bindtap="endRound" disabled="{{is_end}}">结束本轮抢答</button> -->
+
+
+<van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o" text="请确认所有用户进入后开始抢答" />
+
+<van-row>
+  <van-col span="8" offset="8">
+    <van-button type="default" bindtap="sendResponder" disabled="{{is_end}}">发布抢答</van-button>
+  </van-col>
+</van-row>
+<van-row>
+  <van-col span="8" offset="8">
+    <van-button type="primary" bindtap="judgeScore" disabled="{{!canIJudge}}" data-type="1">加分</van-button>
+  </van-col>
+</van-row>
+<van-row>
+  <van-col span="8" offset="8">
+    <van-button type="warning" bindtap="judgeScore" disabled="{{!canIJudge}}" data-type="0">扣分</van-button>
+  </van-col>
+</van-row>
+<van-row>
+  <van-col span="8" offset="8">
+    <van-button type="danger" bindtap="endRound" disabled="{{is_end}}">结束本轮抢答</van-button>
+  </van-col>
+</van-row>
+
+
+
+
+
+<!-- 用户排名 -->
+
+<view wx:if="{{is_end}}">
+  <i-divider color="#2d8cf0" lineColor="#2d8cf0" content="用户排名"></i-divider>
+  <i-cell-group>
+    <i-cell>
+      <i-row>
+        <i-col span="8" i-class="col-class">排名</i-col>
+        <i-col span="8" i-class="col-class">用户名</i-col>
+        <i-col span="8" i-class="col-class">得分</i-col>
+      </i-row>
+    </i-cell>
+
+    <block wx:for="{{user_score}}">
+      <i-cell>
+        <i-row>
+          <i-col span="8" i-class="col-class">{{index+1}}</i-col>
+          <i-col span="8" i-class="col-class">{{item.username}}</i-col>
+          <i-col span="8" i-class="col-class">{{item.score}}分</i-col>
+          <text></text>
+        </i-row>
+      </i-cell>
+    </block>
+  </i-cell-group>
+</view>
+
+<view>
+  <text>已抢答的用户</text>
+  <view wx:for="{{queen}}">
+    <text>{{item.username}}, {{item.time}}</text>
+  </view>
+</view>
+
+<view>
+  <view wx:for="{{message_list}}">
+    <text>{{item}}</text>
+  </view>
+</view>
+
+<view>
+</view>

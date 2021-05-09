@@ -9,7 +9,9 @@ def my_jwt_response_payload_handler(token, user=None, request=None):
         'msg': '登陆成功',
         'status': 100,
         'username': user.username,
-        'user_id': user.id
+        'user_id': user.id,
+        'desc': user.describe,
+        'icon': user.icon.url
     }
 
 

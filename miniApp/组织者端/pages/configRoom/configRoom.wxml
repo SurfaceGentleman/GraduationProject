@@ -1,0 +1,19 @@
+<view hidden>
+  <view>
+    <text>房间名:{{title}}</text>
+  </view>
+  <text>请输入房间密码：</text>
+  <input bindinput="inputPassword" title="密码" placeholder="请输入密码" autofocus placeholder="6位" />
+</view>
+
+<van-notice-bar scrollable="" color="#1989fa" background="#ecf9ff" left-icon="info-o" text="请选择竞答类型" />
+
+<view style="margin-top:50rpx">
+  <van-button data-type="2" bindtap="setRoom" wx:if="{{type != 3}}" type="default">风险题</van-button>
+  <van-button data-type="1" bindtap="setRoom" wx:if="{{type != 3}}" type="primary">必答题</van-button>
+  <van-button data-type="3" bindtap="setRoom" wx:if="{{type == 3}}" type="info">抢答题</van-button>
+
+</view>
+
+
+<text>{{info}}</text>

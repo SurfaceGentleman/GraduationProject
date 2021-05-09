@@ -1,0 +1,20 @@
+<i-cell-group>
+  <block wx:for="{{list}}">
+    <i-cell wx:if="{{item.type == 2}}" bindtap="bindContest" data-type="{{item.type}}" data-id="{{item.id}}"
+      data-list="{{item.question_list}}">
+      <i-icon type="time" size="28" color="#ed3f14" />
+      {{item.name}}
+    </i-cell>
+    <i-cell wx:elif="{{item.type == 1}}" bindtap="bindContest" data-type="{{item.type}}" data-id="{{item.id}}"
+      data-list="{{item.question_list}}">
+
+      <i-icon type="task" size="28" color="#5cadff" />
+      {{item.name}}
+    </i-cell>
+    <i-cell wx:else bindtap="bindContest" data-type="{{item.type}}" data-id="{{item.id}}"
+      data-list="{{item.question_list}}">
+      <i-icon type="translation" size="28" color="#19be6b" />
+      {{item.name}}
+    </i-cell>
+  </block>
+</i-cell-group>

@@ -1,0 +1,79 @@
+<text>风险题模式:答错扣分，答对加分，不作答不扣分</text>
+<i-notice-bar background-color="#19be6b" color="#ff9900">
+  当前用户列表:
+  <block wx:for="{{user_list}}">
+    {{index+1}}:{{item}}
+  </block>
+</i-notice-bar>
+
+<i-divider color="#5cadff" content="等待组织者开启xx"></i-divider>
+<view wx:if="{{!end}}">
+  <view>
+    <text>{{questions[index].text}}</text>
+  </view>
+  <view>
+    <view wx:for="{{questions[index].option_list}}">
+      <i-row>
+        <i-col offset="2" span="20" i-class="col-class">
+          <i-button disabled="{{chosen}}" type="primary" shape="circle" size="small" bindtap="judge"
+            data-isTrue="{{item.is_true}}">
+            {{item.text}}
+          </i-button>
+        </i-col>
+      </i-row>
+    </view>
+  </view>
+</view>
+
+
+<view>
+  <view>
+    <text>{{right_info}}</text>
+    <text>{{wrong_info}}</text>
+  </view>
+</view>
+
+
+
+<view class="progress-item">
+  <i-progress percent="{{ percent }}" status="{{ status }}"></i-progress>
+</view>
+
+
+
+<i-card title="消息列表" extra="得分:{{score}}" style="margin-top:100rpx">
+  <view slot="content">
+    <!-- <view>
+      <text wx:if="{{!canIUseButton}}" style="color:#ff9900">等待组织者发布抢答/判断答案......</text>
+      <text wx:else style="color:#5cadff">正在作答ing</text>
+    </view> -->
+    <view>
+      <i-spin wx:if="{{length == 0}}" custom>
+        <view>waiting......</view>
+      </i-spin>
+      <strong wx:else style="color:#19be6b">当前题目进度：{{index+1}}/{{length}}</strong>
+    </view>
+    <view wx:for="{{message_list}}">
+      <text>{{item}}</text>
+    </view>
+  </view>
+</i-card>
+
+<!-- pages/timedjs/timedjs.wxml
+<view class="container">
+  <view>扇形进度倒计时</view>
+  <canvasCD bind:CDNot="bindCDNot" CDstart="{{CDstart}}" CDend="{{CDend}}" CDinit="{{CDinit}}"></canvasCD>
+</view> -->
+<i-message id="message" />
+
+<view wx:if="{{is_ranked}}">
+  <view>
+    <text>排名：</text>
+  </view>
+  <view wx:for="{{rank}}">
+    <text>{{index+1}} ,{{item.user_name}},{{item.score}}</text>
+  </view>
+
+  <i-button type="primary" bindtap="returnToHome">返回首页
+  </i-button>
+</view>

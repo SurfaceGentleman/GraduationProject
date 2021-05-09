@@ -1,0 +1,9 @@
+/* pages/chat/chat.wxss */
+/* pages/timedjs/timedjs.wxss */
+.container{
+  height: 600rpx;
+}
+.btn view{
+  margin: 30rpx;
+  font-size: 30rpx;
+}
